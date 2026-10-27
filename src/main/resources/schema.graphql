@@ -1,0 +1,51 @@
+type Option {
+    codeOption: Int!
+    libelle: String!
+    domaine: String!
+    responsable: String!
+    credits: Int!
+    semestre: Int!
+    capacite: Int!
+}
+
+type Etudiant {
+    identifiant: String!
+    nom: String!
+    prenom: String!
+    anneeEtude: Int!
+    email: String
+    option: Option
+}
+
+type Query {
+    # --- Options ---
+    getAllOptions: [Option!]!
+    getOptionByCode(codeOption: Int!): Option
+    getOptionsByDomaine(domaine: String!): [Option!]!
+
+    # --- Etudiants ---
+    getAllEtudiants: [Etudiant!]!
+    getEtudiantByIdentifiant(identifiant: String!): Etudiant
+    getEtudiantsByOption(codeOption: Int!): [Etudiant!]!
+}
+
+type Mutation {
+    # --- Options ---
+    addOption(codeOption: Int!, libelle: String!, domaine: String!, responsable: String!,
+              credits: Int!, semestre: Int!, capacite: Int!): Boolean!
+    updateOption(codeOption: Int!, libelle: String!, domaine: String!, responsable: String!,
+                 credits: Int!, semestre: Int!, capacite: Int!): Boolean!
+    deleteOption(codeOption: Int!): Boolean!
+
+    # --- Etudiants ---
+    addEtudiant(identifiant: String!, nom: String!, prenom: String!, anneeEtude: Int!,
+                email: String, codeOption: Int!): Boolean!
+    updateEtudiant(identifiant: String!, nom: String!, prenom: String!, anneeEtude: Int!,
+                   email: String, codeOption: Int!): Boolean!
+    deleteEtudiant(identifiant: String!): Boolean!
+}
+
+schema {
+    query: Query
+    mutation: Mutation
+}
